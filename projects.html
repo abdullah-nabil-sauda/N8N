@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جميع المشاريع | عبدالله نبيل - خبير أتمتة N8N</title>
-    <meta name="description" content="اكتشف 50+ مشروع أتمتة N8N جاهز للتنفيذ. إدارة مشاريع، موارد بشرية، تسويق رقمي، وأكثر. اختر المجال الذي يناسب عملك.">
-    <meta name="keywords" content="N8N, أتمتة, مشاريع, إدارة مشاريع, موارد بشرية, تسويق, ذكاء اصطناعي">
+    <title>المشاريع | عبدالله نبيل - خبير أتمتة N8N والذكاء الاصطناعي</title>
+    <meta name="description" content="استعرض مشاريع أتمتة احترافية باستخدام N8N والذكاء الاصطناعي.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,64 +30,263 @@
             transform: translateY(30px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
         .text-gradient {
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-image: linear-gradient(to left, #155724, #1e7e34, #28a745);
         }
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #155724; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #1e7e34; }
+
         .bg-dots {
             background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
             background-size: 24px 24px;
         }
+
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
         }
+
         @keyframes pulse-soft {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
         }
-        .category-card {
+
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(21,87,36,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(21,87,36,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .stagger-1 { transition-delay: 0ms !important; }
+        .stagger-2 { transition-delay: 80ms !important; }
+        .stagger-3 { transition-delay: 160ms !important; }
+        .stagger-4 { transition-delay: 240ms !important; }
+        .stagger-5 { transition-delay: 320ms !important; }
+        .stagger-6 { transition-delay: 400ms !important; }
+        .stagger-7 { transition-delay: 480ms !important; }
+        .stagger-8 { transition-delay: 560ms !important; }
+        .stagger-9 { transition-delay: 640ms !important; }
+        .stagger-10 { transition-delay: 720ms !important; }
+        .stagger-11 { transition-delay: 800ms !important; }
+
+        /* ===== بطاقة المشروع ===== */
+        .project-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
-        .category-card:hover {
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--card-accent, #155724), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+        }
+        .project-card:hover::before { opacity: 1; }
+        .project-card:hover {
+            border-color: #155724;
             transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(21, 87, 36, 0.12);
         }
-        .category-card:hover .card-icon {
-            transform: scale(1.1) rotate(-5deg);
+
+        /* ===== صورة المشروع ===== */
+        .project-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 240px;
+            background: #f8fafc;
         }
-        .card-icon {
-            transition: transform 0.4s ease;
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 12px;
+            background: #f8fafc;
         }
-        .stat-counter {
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+        .project-image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.4) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* ===== شارة القسم فوق الصورة ===== */
+        .image-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 3;
+        }
+
+        /* ===== Pipeline فوق الصورة ===== */
+        .image-pipeline {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            right: 12px;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: nowrap;
+            overflow: hidden;
+        }
+        .pipe-node {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+            backdrop-filter: blur(8px);
+        }
+        .pipe-arrow {
+            flex-shrink: 0;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* ===== الأزرار الثلاثة ===== */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 10px 4px;
+            border-radius: 14px;
+            font-size: 11px;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            cursor: pointer;
+            text-align: center;
+            line-height: 1.3;
+            border: 1px solid transparent;
+        }
+        .action-btn:hover { transform: translateY(-3px); }
+
+        .btn-preview {
+            background: #f0fdf4;
+            color: #155724;
+            border-color: #dcfce7;
+        }
+        .btn-preview:hover {
+            background: #dcfce7;
+            border-color: #bbf7d0;
+            box-shadow: 0 8px 20px -4px rgba(21, 87, 36, 0.15);
+        }
+
+        .btn-details {
+            background: #155724;
+            color: white;
+        }
+        .btn-details:hover {
+            background: #1e7e34;
+            box-shadow: 0 8px 20px -4px rgba(21, 87, 36, 0.3);
+        }
+
+        .btn-download {
+            background: #f8fafc;
+            color: #475569;
+            border-color: #e2e8f0;
+        }
+        .btn-download:hover {
+            background: #e2e8f0;
+            border-color: #cbd5e1;
+            color: #155724;
+            box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ===== KPI ===== */
+        .kpi-strip { display: flex; gap: 8px; }
+        .kpi-item {
+            flex: 1;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: #f0fdf4;
+            border: 1px solid #dcfce7;
             transition: all 0.3s ease;
         }
-        .glow-green {
-            box-shadow: 0 0 30px rgba(21, 87, 36, 0.15);
+        .kpi-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px -2px rgba(21, 87, 36, 0.1); }
+
+        /* ===== فلتر ===== */
+        .filter-tab {
+            transition: all 0.3s ease;
+            position: relative;
         }
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
+        .filter-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: #155724;
+            transition: width 0.3s ease;
         }
-        .slide-in {
-            animation: slideInRight 0.6s ease-out forwards;
+        .filter-tab:hover::after,
+        .filter-tab.active::after { width: 100%; }
+
+      
+
+        /* ===== Search ===== */
+        .search-suggestions {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .search-suggestions.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        /* ===== View toggle ===== */
+        .view-toggle-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .view-toggle-btn.active {
+            background: #155724;
+            color: white;
         }
     </style>
 </head>
 <body class="bg-white text-gray-800 font-sans overflow-x-hidden">
 
-    <!-- ============================================
-         HEADER
-         ============================================ -->
+    <!-- الهيدر -->
     <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 transition-all duration-300" id="navbar">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
@@ -99,784 +297,411 @@
                     </a>
                 </div>
                 <nav class="hidden lg:flex space-x-8 space-x-reverse">
-                    <a href="index.html" class="text-gray-600 hover:text-saudi font-medium transition-colors duration-200 relative group">
-                        الرئيسية
-                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-saudi transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                    <a href="about.html" class="text-gray-600 hover:text-saudi font-medium transition-colors duration-200 relative group">
-                        من أنا
-                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-saudi transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                    <a href="services.html" class="text-gray-600 hover:text-saudi font-medium transition-colors duration-200 relative group">
-                        خدماتي
-                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-saudi transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                    <a href="projects.html" class="text-saudi font-bold transition-colors duration-200 relative group">
-                        مشاريعي
-                        <span class="absolute bottom-0 right-0 w-full h-0.5 bg-saudi"></span>
-                    </a>
-                    <a href="blog.html" class="text-gray-600 hover:text-saudi font-medium transition-colors duration-200 relative group">
-                        المدونة
-                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-saudi transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                    <a href="index.html#contact" class="text-gray-600 hover:text-saudi font-medium transition-colors duration-200 relative group">
-                        تواصل معي
-                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-saudi transition-all duration-300 group-hover:w-full"></span>
-                    </a>
+                    <a href="index.html" class="text-gray-600 hover:text-saudi font-medium transition-colors relative group">الرئيسية<span class="absolute bottom-0 right-0 w-0 h-0.5 bg-saudi transition-all duration-300 group-hover:w-full"></span></a>
+                    <a href="index.html#about" class="text-gray-600 hover:text-saudi font-medium transition-colors relative group">من أنا<span class="absolute bottom-0 right-0 w-0 h-0.5 bg-saudi transition-all duration-300 group-hover:w-full"></span></a>
+                    <a href="index.html#services" class="text-gray-600 hover:text-saudi font-medium transition-colors relative group">خدماتي<span class="absolute bottom-0 right-0 w-0 h-0.5 bg-saudi transition-all duration-300 group-hover:w-full"></span></a>
+                    <a href="projects.html" class="text-saudi font-bold relative group">مشاريعي<span class="absolute bottom-0 right-0 w-full h-0.5 bg-saudi"></span></a>
+                    <a href="index.html#blog" class="text-gray-600 hover:text-saudi font-medium transition-colors relative group">المدونة<span class="absolute bottom-0 right-0 w-0 h-0.5 bg-saudi transition-all duration-300 group-hover:w-full"></span></a>
+                    <a href="index.html#contact" class="text-gray-600 hover:text-saudi font-medium transition-colors relative group">تواصل معي<span class="absolute bottom-0 right-0 w-0 h-0.5 bg-saudi transition-all duration-300 group-hover:w-full"></span></a>
                 </nav>
                 <div class="flex items-center gap-4">
-                    <a href="index.html#contact" class="hidden lg:inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-semibold rounded-full text-white bg-saudi hover:bg-saudi-light transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5">
-                        اطلب استشارة مجانية
-                    </a>
-                    <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-md text-gray-600 hover:text-saudi focus:outline-none transition-colors" aria-label="فتح القائمة">
-                        <svg class="h-7 w-7" id="menu-icon-open" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                        <svg class="h-7 w-7 hidden" id="menu-icon-close" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
+                    <a href="index.html#contact" class="hidden lg:inline-flex items-center px-6 py-2.5 text-sm font-semibold rounded-full text-white bg-saudi hover:bg-saudi-light transition-all hover:shadow-lg transform hover:-translate-y-0.5">اطلب استشارة مجانية</a>
+                    <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-md text-gray-600 hover:text-saudi" aria-label="فتح القائمة">
+                        <svg class="h-7 w-7" id="menu-icon-open" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        <svg class="h-7 w-7 hidden" id="menu-icon-close" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 absolute w-full shadow-xl">
             <div class="px-4 pt-2 pb-6 space-y-1">
-                <a href="index.html" class="mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-saudi hover:bg-green-50 transition-all">الرئيسية</a>
-                <a href="about.html" class="mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-saudi hover:bg-green-50 transition-all">من أنا</a>
-                <a href="services.html" class="mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-saudi hover:bg-green-50 transition-all">خدماتي</a>
-                <a href="projects.html" class="mobile-nav-link block px-4 py-3 rounded-lg text-base font-bold text-saudi bg-green-50 transition-all">مشاريعي</a>
-                <a href="blog.html" class="mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-saudi hover:bg-green-50 transition-all">المدونة</a>
-                <a href="index.html#contact" class="mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-saudi hover:bg-green-50 transition-all">تواصل معي</a>
-                <div class="pt-4 px-4">
-                    <a href="index.html#contact" class="block w-full text-center px-6 py-3 rounded-full text-white bg-saudi hover:bg-saudi-light font-semibold transition-all">اطلب استشارة مجانية</a>
-                </div>
+                <a href="index.html" class="mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-saudi hover:bg-green-50">الرئيسية</a>
+                <a href="index.html#about" class="mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-saudi hover:bg-green-50">من أنا</a>
+                <a href="index.html#services" class="mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-saudi hover:bg-green-50">خدماتي</a>
+                <a href="projects.html" class="mobile-nav-link block px-4 py-3 rounded-lg text-base font-bold text-saudi bg-green-50">مشاريعي</a>
+                <a href="index.html#blog" class="mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-saudi hover:bg-green-50">المدونة</a>
+                <a href="index.html#contact" class="mobile-nav-link block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-saudi hover:bg-green-50">تواصل معي</a>
+                <div class="pt-4 px-4"><a href="index.html#contact" class="block w-full text-center px-6 py-3 rounded-full text-white bg-saudi hover:bg-saudi-light font-semibold">اطلب استشارة مجانية</a></div>
             </div>
         </div>
     </header>
 
-    <!-- ============================================
-         HERO SECTION
-         ============================================ -->
+
+    <!-- HERO -->
     <section class="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
         <div class="absolute inset-0 z-0 opacity-20 bg-dots"></div>
-        <div class="absolute inset-0 z-0 opacity-30">
-            <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M0 100 C 20 0 50 0 100 100 Z" fill="#f0fdf4"/>
-            </svg>
-        </div>
+        <div class="absolute inset-0 z-0 grid-bg"></div>
+        <div class="absolute inset-0 z-0 opacity-30"><svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0 100 C 20 0 50 0 100 100 Z" fill="#f0fdf4"/></svg></div>
+        <div class="absolute top-20 right-10 w-72 h-72 bg-saudi/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 left-10 w-96 h-96 bg-green-100/30 rounded-full blur-3xl"></div>
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-4xl mx-auto fade-up">
-                <!-- Breadcrumb -->
                 <nav class="flex justify-center items-center gap-2 text-sm text-gray-500 mb-6">
                     <a href="index.html" class="hover:text-saudi transition-colors">الرئيسية</a>
                     <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    <span class="text-saudi font-bold">جميع المشاريع</span>
+                    <span class="text-saudi font-bold">مشاريع الأتمتة</span>
                 </nav>
 
-                <!-- Badges -->
                 <div class="flex flex-wrap justify-center gap-3 mb-6">
                     <span class="inline-flex items-center gap-1.5 bg-green-100 text-green-800 text-sm font-bold px-4 py-1.5 rounded-full" style="animation: pulse-soft 2s ease-in-out infinite;">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        جاهز للتنفيذ
+                        مشاريع حقيقية مُنفّذة
                     </span>
-                    <span class="inline-flex items-center gap-1.5 bg-blue-100 text-blue-800 text-sm font-bold px-4 py-1.5 rounded-full">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                        مدعوم بالذكاء الاصطناعي
-                    </span>
-                    <span class="inline-flex items-center gap-1.5 bg-purple-100 text-purple-800 text-sm font-bold px-4 py-1.5 rounded-full">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                        3 أقسام متخصصة
-                    </span>
+                    <span class="inline-flex items-center gap-1.5 bg-blue-100 text-blue-800 text-sm font-bold px-4 py-1.5 rounded-full">⚡ مدعوم بوكلاء AI</span>
+                    <span class="inline-flex items-center gap-1.5 bg-purple-100 text-purple-800 text-sm font-bold px-4 py-1.5 rounded-full">🛡️ قابل للتخصيص</span>
                 </div>
 
-                <!-- Title -->
                 <h1 class="text-4xl lg:text-5xl xl:text-6xl font-black text-gray-900 leading-tight mb-6">
-                    معرض المشاريع
-                    <span class="text-gradient">الشامل</span>
+                    مشاريع الأتمتة <span class="text-gradient">والذكاء الاصطناعي</span>
                     <br class="hidden sm:block"/>
-                    <span class="text-2xl lg:text-3xl font-bold text-gray-500 mt-2 block">اختر القسم الذي يناسب عملك</span>
+                    <span class="text-2xl lg:text-3xl font-bold text-gray-500 mt-2 block">حلول واقعية تم بناؤها وتسليمها بنجاح</span>
                 </h1>
 
-                <!-- Description -->
                 <p class="text-lg lg:text-xl text-gray-600 mb-10 leading-relaxed max-w-3xl mx-auto">
-                    أكثر من <span class="font-bold text-saudi">39 نظام أتمتة</span> مصنفة في
-                    <span class="font-bold text-saudi">3 أقسام متخصصة</span>.
-                    سواء كنت مدير مشاريع، مسؤول موارد بشرية، أو مسوّق رقمي — ستجد ما يناسبك بالضبط.
+                    من <span class="font-bold text-saudi">وكلاء الذكاء الاصطناعي</span> إلى <span class="font-bold text-saudi">أتمتة الاجتماعات</span> و<span class="font-bold text-saudi">إدارة المهام الذكية</span> — كل مشروع هنا يمثل حلاً حقيقياً تم تصميمه لتوفير الوقت وتقليل التكاليف.
                 </p>
 
-                <!-- Stats -->
                 <div class="flex flex-wrap justify-center gap-6 lg:gap-10">
-                    <div class="text-center">
-                        <div class="text-3xl font-black text-saudi" id="stat-projects">0</div>
-                        <div class="text-sm text-gray-500 font-medium">مشروع جاهز</div>
-                    </div>
+                    <div class="text-center"><div class="text-3xl font-black text-saudi counter" data-target="12">0</div><div class="text-sm text-gray-500 font-medium">مشروع مكتمل</div></div>
                     <div class="w-px h-12 bg-gray-200 hidden sm:block"></div>
-                    <div class="text-center">
-                        <div class="text-3xl font-black text-saudi">3</div>
-                        <div class="text-sm text-gray-500 font-medium">أقسام متخصصة</div>
-                    </div>
+                    <div class="text-center"><div class="text-3xl font-black text-saudi counter" data-target="4">0</div><div class="text-sm text-gray-500 font-medium">تصنيفات متخصصة</div></div>
                     <div class="w-px h-12 bg-gray-200 hidden sm:block"></div>
-                    <div class="text-center">
-                        <div class="text-3xl font-black text-saudi" id="stat-tools">0</div>
-                        <div class="text-sm text-gray-500 font-medium">تكامل وأداة</div>
-                    </div>
+                    <div class="text-center"><div class="text-3xl font-black text-saudi counter" data-target="20">0</div><div class="text-sm text-gray-500 font-medium">أداة وتكامل</div></div>
                     <div class="w-px h-12 bg-gray-200 hidden sm:block"></div>
-                    <div class="text-center">
-                        <div class="text-3xl font-black text-saudi">100%</div>
-                        <div class="text-sm text-gray-500 font-medium">قابل للتخصيص</div>
-                    </div>
+                    <div class="text-center"><div class="text-3xl font-black text-saudi">AI</div><div class="text-sm text-gray-500 font-medium">وكلاء ذكاء اصطناعي</div></div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ============================================
-         WHO ARE YOU? - ROLE SELECTOR
-         ============================================ -->
-    <section class="py-16 bg-white" id="roles">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 fade-up">
-                <span class="text-saudi font-bold tracking-wider text-sm uppercase mb-2 block">ابدأ من هنا</span>
-                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">ما هو دورك الوظيفي؟</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">اختر دورك لنعرض لك المشاريع الأنسب مباشرة</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                <!-- Role 1: Project Manager -->
-                <a href="projects-management.html" class="group block fade-up">
-                    <div class="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-6 border-2 border-transparent hover:border-saudi transition-all duration-300 text-center hover:shadow-lg">
-                        <div class="w-16 h-16 bg-saudi/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-saudi/20 transition-colors">
-                            <span class="text-3xl">📋</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-saudi transition-colors">مدير مشاريع</h3>
-                        <p class="text-gray-500 text-sm">تتبع المهام، تقارير ذكية، إدارة الفريق</p>
-                        <div class="mt-3 text-saudi font-bold text-sm flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                            عرض 10 مشاريع
-                            <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Role 2: HR Manager -->
-                <a href="projects-hr.html" class="group block fade-up" style="transition-delay:100ms">
-                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border-2 border-transparent hover:border-saudi transition-all duration-300 text-center hover:shadow-lg">
-                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
-                            <span class="text-3xl">👥</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-saudi transition-colors">مسؤول موارد بشرية</h3>
-                        <p class="text-gray-500 text-sm">توظيف، تأهيل، رواتب، أداء</p>
-                        <div class="mt-3 text-saudi font-bold text-sm flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                            عرض 10 مشاريع
-                            <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Role 3: Marketer -->
-                <a href="projects-marketing.html" class="group block fade-up" style="transition-delay:200ms">
-                    <div class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-6 border-2 border-transparent hover:border-saudi transition-all duration-300 text-center hover:shadow-lg">
-                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
-                            <span class="text-3xl">📢</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-saudi transition-colors">مسوّق رقمي</h3>
-                        <p class="text-gray-500 text-sm">جذب عملاء، سوشيال، بريد، تحليلات</p>
-                        <div class="mt-3 text-saudi font-bold text-sm flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                            عرض 19 مشروع
-                            <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================
-         SECTION: PROJECT CATEGORIES (DETAILED CARDS)
-         ============================================ -->
-    <section class="py-20 bg-gray-50" id="categories">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 fade-up">
-                <span class="text-saudi font-bold tracking-wider text-sm uppercase mb-2 block">الأقسام التفصيلية</span>
-                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">استكشف كل قسم بالتفصيل</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">كل قسم يحتوي على مشاريع متخصصة مع تفاصيل كاملة، تقنيات مستخدمة، وروابط مباشرة للتنفيذ.</p>
-            </div>
-
-            <!-- ====== Category 1: Project Management ====== -->
-            <div class="category-card bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden mb-10 fade-up glow-green">
-                <div class="grid lg:grid-cols-5">
-                    <!-- Right Side: Info -->
-                    <div class="lg:col-span-3 p-8 lg:p-12">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="w-14 h-14 card-icon bg-gradient-to-br from-emerald-100 to-green-100 rounded-2xl flex items-center justify-center shadow-sm">
-                                <span class="text-3xl">📋</span>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-black text-gray-900">إدارة المشاريع</h3>
-                                <p class="text-sm text-gray-500">للمدراء وقادة الفرق</p>
-                            </div>
-                        </div>
-
-                        <p class="text-gray-600 leading-relaxed mb-6">
-                            10 قوالب N8N جاهزة لإدارة المشاريع والمدراء التنفيذيين. من تتبع المهام تلقائياً إلى التقارير الذكية بالذكاء الاصطناعي — كل ما تحتاجه لإدارة مشاريعك باحترافية وتوفير أكثر من 10 ساعات أسبوعياً.
-                        </p>
-
-                        <!-- Highlights -->
-                        <div class="grid grid-cols-2 gap-3 mb-6">
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>تتبع المهام تلقائياً</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>تقارير ذكية بالـ AI</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>تحويل الصوت لمهام</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>إدارة مشاريع البناء</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>كشف الاختناقات مبكراً</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>مساعد Scrum Master</span>
-                            </div>
-                        </div>
-
-                        <!-- Tools -->
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Trello</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Jira</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Asana</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Telegram</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Slack</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Airtable</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">AI</span>
-                        </div>
-
-                        <!-- CTA -->
-                        <a href="projects-management.html" class="inline-flex items-center gap-2 bg-saudi text-white font-bold py-3 px-8 rounded-xl hover:bg-saudi-light transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                            <span>استعرض 10 مشاريع إدارة المشاريع</span>
-                            <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </a>
-                    </div>
-
-                    <!-- Left Side: Stats -->
-                    <div class="lg:col-span-2 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 p-8 lg:p-12 flex flex-col justify-center">
-                        <div class="space-y-6">
-                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-sm">
-                                <div class="text-4xl font-black text-saudi mb-1">10+</div>
-                                <div class="text-sm text-gray-600 font-medium">ساعات توفير أسبوعياً</div>
-                            </div>
-                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-sm">
-                                <div class="text-4xl font-black text-saudi mb-1">10</div>
-                                <div class="text-sm text-gray-600 font-medium">قوالب جاهزة</div>
-                            </div>
-                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-sm">
-                                <div class="text-4xl font-black text-saudi mb-1">0 ريال</div>
-                                <div class="text-sm text-gray-600 font-medium">مجاني بالكامل</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ====== Category 2: HR ====== -->
-            <div class="category-card bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden mb-10 fade-up" style="transition-delay:100ms">
-                <div class="grid lg:grid-cols-5">
-                    <div class="lg:col-span-3 p-8 lg:p-12">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="w-14 h-14 card-icon bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl flex items-center justify-center shadow-sm">
-                                <span class="text-3xl">👥</span>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-black text-gray-900">الموارد البشرية</h3>
-                                <p class="text-sm text-gray-500">من التوظيف إلى التقاعد</p>
-                            </div>
-                        </div>
-
-                        <p class="text-gray-600 leading-relaxed mb-6">
-                            10 أنظمة ذكية توفر 80% من وقت فريق HR وتحسّن تجربة الموظفين. من فحص السير الذاتية بالذكاء الاصطناعي إلى إنشاء كشوف الرواتب تلقائياً — كل ما تحتاجه لإدارة موارد بشرية احترافية.
-                        </p>
-
-                        <div class="grid grid-cols-2 gap-3 mb-6">
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>فحص سير ذاتية بالـ AI</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>جدولة مقابلات تلقائياً</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>تأهيل في 5 دقائق</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>كشوف رواتب PDF</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>فحص LinkedIn بالـ AI</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>إدارة المواهب الشاملة</span>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Gemini AI</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Gmail</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Calendar</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Telegram</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Google Sheets</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Slack</span>
-                        </div>
-
-                        <a href="projects-hr.html" class="inline-flex items-center gap-2 bg-saudi text-white font-bold py-3 px-8 rounded-xl hover:bg-saudi-light transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                            <span>استعرض 10 مشاريع الموارد البشرية</span>
-                            <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </a>
-                    </div>
-
-                    <div class="lg:col-span-2 bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-50 p-8 lg:p-12 flex flex-col justify-center">
-                        <div class="space-y-6">
-                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-sm">
-                                <div class="text-4xl font-black text-saudi mb-1">80%</div>
-                                <div class="text-sm text-gray-600 font-medium">توفير وقت HR</div>
-                            </div>
-                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-sm">
-                                <div class="text-4xl font-black text-saudi mb-1">50%</div>
-                                <div class="text-sm text-gray-600 font-medium">تقليل وقت التوظيف</div>
-                            </div>
-                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-sm">
-                                <div class="text-4xl font-black text-saudi mb-1">40%</div>
-                                <div class="text-sm text-gray-600 font-medium">تحسين الاحتفاظ</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ====== Category 3: Marketing ====== -->
-            <div class="category-card bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden fade-up" style="transition-delay:200ms">
-                <div class="grid lg:grid-cols-5">
-                    <div class="lg:col-span-3 p-8 lg:p-12">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="w-14 h-14 card-icon bg-gradient-to-br from-purple-100 to-violet-100 rounded-2xl flex items-center justify-center shadow-sm">
-                                <span class="text-3xl">📢</span>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-black text-gray-900">Marketing Ops</h3>
-                                <p class="text-sm text-gray-500">تسويق رقمي شامل</p>
-                            </div>
-                        </div>
-
-                        <p class="text-gray-600 leading-relaxed mb-6">
-                            19 نظام Marketing Ops يغطي كل جوانب التسويق الرقمي: جذب العملاء، التسويق عبر البريد والسوشيال ميديا، توليد المحتوى بالذكاء الاصطناعي، التحليلات الذكية، وإدارة حملات المؤثرين.
-                        </p>
-
-                        <div class="grid grid-cols-2 gap-3 mb-6">
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>جذب عملاء تلقائي</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>نشر سوشيال تلقائي</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>حملات بريد بالـ AI</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>تقارير تسويقية ذكية</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>تقييم المؤثرين</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <svg class="w-5 h-5 text-saudi flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>بحث المنافسين</span>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">OpenAI</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Google Ads</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Meta Ads</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">Twitter</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">LinkedIn</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">TikTok</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">HubSpot</span>
-                        </div>
-
-                        <a href="projects-marketing.html" class="inline-flex items-center gap-2 bg-saudi text-white font-bold py-3 px-8 rounded-xl hover:bg-saudi-light transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                            <span>استعرض 19 مشروع Marketing Ops</span>
-                            <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </a>
-                    </div>
-
-                    <div class="lg:col-span-2 bg-gradient-to-br from-purple-50 via-violet-50 to-purple-50 p-8 lg:p-12 flex flex-col justify-center">
-                        <div class="space-y-6">
-                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-sm">
-                                <div class="text-4xl font-black text-saudi mb-1">19</div>
-                                <div class="text-sm text-gray-600 font-medium">Workflow تسويقي</div>
-                            </div>
-                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-sm">
-                                <div class="text-4xl font-black text-saudi mb-1">7</div>
-                                <div class="text-sm text-gray-600 font-medium">فئات تسويقية</div>
-                            </div>
-                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-sm">
-                                <div class="text-4xl font-black text-saudi mb-1">15+</div>
-                                <div class="text-sm text-gray-600 font-medium">تكامل وأداة</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================
-         QUICK COMPARISON TABLE
-         ============================================ -->
-    <section class="py-20 bg-white">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 fade-up">
-                <span class="text-saudi font-bold tracking-wider text-sm uppercase mb-2 block">مقارنة سريعة</span>
-                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">أي قسم يناسبك؟</h2>
-            </div>
-
-            <div class="max-w-5xl mx-auto overflow-x-auto fade-up" style="transition-delay:100ms">
-                <table class="w-full text-sm">
-                    <thead>
-                        <tr class="bg-gray-50">
-                            <th class="text-right py-4 px-6 font-bold text-gray-900 rounded-tr-xl">المعيار</th>
-                            <th class="text-center py-4 px-6 font-bold text-gray-900">
-                                <div class="flex flex-col items-center gap-1">
-                                    <span class="text-2xl">📋</span>
-                                    <span>إدارة المشاريع</span>
-                                </div>
-                            </th>
-                            <th class="text-center py-4 px-6 font-bold text-gray-900">
-                                <div class="flex flex-col items-center gap-1">
-                                    <span class="text-2xl">👥</span>
-                                    <span>الموارد البشرية</span>
-                                </div>
-                            </th>
-                            <th class="text-center py-4 px-6 font-bold text-gray-900 rounded-tl-xl">
-                                <div class="flex flex-col items-center gap-1">
-                                    <span class="text-2xl">📢</span>
-                                    <span>Marketing Ops</span>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        <tr>
-                            <td class="py-4 px-6 font-medium text-gray-700">عدد المشاريع</td>
-                            <td class="py-4 px-6 text-center font-bold text-saudi">10</td>
-                            <td class="py-4 px-6 text-center font-bold text-saudi">10</td>
-                            <td class="py-4 px-6 text-center font-bold text-saudi">19</td>
-                        </tr>
-                        <tr class="bg-gray-50/50">
-                            <td class="py-4 px-6 font-medium text-gray-700">الجمهور المستهدف</td>
-                            <td class="py-4 px-6 text-center text-gray-600">مدراء المشاريع</td>
-                            <td class="py-4 px-6 text-center text-gray-600">فريق HR</td>
-                            <td class="py-4 px-6 text-center text-gray-600">المسوقين</td>
-                        </tr>
-                        <tr>
-                            <td class="py-4 px-6 font-medium text-gray-700">ذكاء اصطناعي</td>
-                            <td class="py-4 px-6 text-center"><span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-0.5 rounded-full">✅ نعم</span></td>
-                            <td class="py-4 px-6 text-center"><span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-0.5 rounded-full">✅ نعم</span></td>
-                            <td class="py-4 px-6 text-center"><span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-0.5 rounded-full">✅ نعم</span></td>
-                        </tr>
-                        <tr class="bg-gray-50/50">
-                            <td class="py-4 px-6 font-medium text-gray-700">التوفير المتوقع</td>
-                            <td class="py-4 px-6 text-center font-bold text-saudi">10+ ساعات/أسبوع</td>
-                            <td class="py-4 px-6 text-center font-bold text-saudi">80% من الوقت</td>
-                            <td class="py-4 px-6 text-center font-bold text-saudi">نشر يومي تلقائي</td>
-                        </tr>
-                        <tr>
-                            <td class="py-4 px-6 font-medium text-gray-700">الأبرز</td>
-                            <td class="py-4 px-6 text-center text-gray-600">كشف الاختناقات مبكراً</td>
-                            <td class="py-4 px-6 text-center text-gray-600">تأهيل في 5 دقائق</td>
-                            <td class="py-4 px-6 text-center text-gray-600">تقارير ROI ذكية</td>
-                        </tr>
-                        <tr class="bg-gray-50/50">
-                            <td class="py-4 px-6 font-medium text-gray-700"></td>
-                            <td class="py-4 px-6 text-center">
-                                <a href="projects-management.html" class="inline-flex items-center gap-1 text-saudi font-bold text-sm hover:underline">
-                                    عرض المشاريع
-                                    <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                                </a>
-                            </td>
-                            <td class="py-4 px-6 text-center">
-                                <a href="projects-hr.html" class="inline-flex items-center gap-1 text-saudi font-bold text-sm hover:underline">
-                                    عرض المشاريع
-                                    <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                                </a>
-                            </td>
-                            <td class="py-4 px-6 text-center">
-                                <a href="projects-marketing.html" class="inline-flex items-center gap-1 text-saudi font-bold text-sm hover:underline">
-                                    عرض المشاريع
-                                    <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================
-         CTA SECTION
-         ============================================ -->
-    <section class="py-16 bg-saudi text-white relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0 0 L100 100 M100 0 L0 100" stroke="white" stroke-width="0.5"/></svg>
-        </div>
-        <div class="absolute top-0 left-0 w-72 h-72 bg-white/5 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2"></div>
-        <div class="absolute bottom-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl translate-y-1/2 translate-x-1/2"></div>
-
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-4xl mx-auto text-center">
-                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-bold text-green-100 mb-6">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
-                    لم تجد ما يناسبك؟
-                </div>
-                <h2 class="text-3xl lg:text-4xl font-bold mb-6">أبني لك نظام أتمتة مخصص 100% 🚀</h2>
-                <p class="text-xl text-green-100 mb-8 max-w-3xl mx-auto leading-relaxed">
-                    كل عمل فريد. دعني أحلل احتياجاتك وأصمم لك <strong class="text-white">workflow مخصص</strong> يتكامل مع أدواتك الحالية ويحقق أهدافك بالضبط — مع ضمان النتائج.
-                </p>
-
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="index.html#contact" class="inline-flex items-center gap-2 bg-white text-saudi font-bold py-4 px-10 rounded-full shadow-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                        <span>استشارة مجانية 15 دقيقة</span>
-                    </a>
-                    <a href="https://wa.me/967718672576" target="_blank" class="inline-flex items-center gap-2 bg-transparent border-2 border-white/30 text-white font-bold py-4 px-10 rounded-full hover:bg-white/10 transition-all duration-300">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
-                        <span>تواصل عبر واتساب</span>
+                <div class="mt-12">
+                    <a href="#projects-dashboard" class="inline-flex items-center gap-2 text-saudi font-bold hover:underline">
+                        <span>استعرض المشاريع</span>
+                        <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                     </a>
                 </div>
-
-                <div class="flex flex-wrap justify-center gap-6 mt-8 text-sm text-green-200">
-                    <div class="flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <span>استشارة مجانية</span>
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <span>تسليم خلال أسبوع</span>
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <span>ضمان الجودة</span>
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <span>دعم فني بعد التسليم</span>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- ============================================
-         FOOTER
-         ============================================ -->
-    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8 border-t border-gray-800">
+
+    <!-- لوحة تحكم المشاريع -->
+    <section id="projects-dashboard" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+
+            <!-- رأس القسم -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 fade-up">
+                <div>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">استعرض المشاريع</h2>
+                    <p class="text-gray-500 flex items-center gap-2">
+                        <span class="inline-flex items-center gap-1 bg-saudi/10 text-saudi px-3 py-1 rounded-full text-sm font-bold"><span id="visible-count">12</span></span>
+                        <span>مشروع أتمتة وذكاء اصطناعي</span>
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center bg-gray-100 rounded-xl p-1 gap-1">
+                        <button onclick="switchView('grid')" id="view-grid-btn" class="view-toggle-btn active" title="عرض شبكي">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                        </button>
+                        <button onclick="switchView('list')" id="view-list-btn" class="view-toggle-btn text-gray-400 bg-transparent" title="عرض قائمة">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الفلترة والبحث -->
+            <div class="bg-gray-50 rounded-2xl p-6 mb-10 fade-up border border-gray-100" style="transition-delay: 100ms;">
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <div class="flex flex-wrap gap-2 flex-1">
+                        <button class="filter-tab active px-4 py-2 rounded-lg text-sm font-bold bg-saudi text-white" data-filter="all" onclick="filterProjects('all', this)">🔥 الكل</button>
+                        <button class="filter-tab px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100" data-filter="وكلاء الذكاء الاصطناعي" onclick="filterProjects('وكلاء الذكاء الاصطناعي', this)">🤖 وكلاء AI</button>
+                        <button class="filter-tab px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100" data-filter="أتمتة الاجتماعات" onclick="filterProjects('أتمتة الاجتماعات', this)">🎤 أتمتة الاجتماعات</button>
+                        <button class="filter-tab px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100" data-filter="إدارة المهام" onclick="filterProjects('إدارة المهام', this)">📋 إدارة المهام</button>
+                        <button class="filter-tab px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100" data-filter="إشعارات وتصعيد" onclick="filterProjects('إشعارات وتصعيد', this)">🔔 إشعارات وتصعيد</button>
+                    </div>
+                    <div class="relative lg:w-auto">
+                        <input type="text" id="search-input" placeholder="ابحث عن مشروع..." class="w-full sm:w-64 px-4 py-2.5 pr-10 rounded-lg border border-gray-200 focus:ring-2 focus:ring-saudi/20 focus:border-saudi outline-none text-sm" oninput="searchProjects(this.value)">
+                        <svg class="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <div id="search-suggestions" class="search-suggestions absolute top-full right-0 left-0 mt-2 bg-white rounded-lg shadow-xl border border-gray-100 z-30 overflow-hidden"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- شبكة المشاريع -->
+            <div id="projects-grid" class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+                <!-- مشروع 1 -->
+                <div class="project-card fade-up stagger-1" style="--card-accent: #3b82f6;"
+                     data-category="أتمتة الاجتماعات" data-id="project-01"
+                     data-title="وكيل ذكاء اصطناعي لإدارة الاجتماعات"
+                     data-tags="N8N,GPT-4o,Fireflies,Airtable,Gmail">
+                    <div class="project-image-wrapper">
+                        <img src="Manager/1.jpg" alt="وكيل ذكاء اصطناعي لإدارة الاجتماعات" class="project-image" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-blue-50','via-indigo-50','to-blue-100'); this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center';">
+                        <div class="project-image-overlay"></div>
+                        <div class="image-badge"><span class="bg-blue-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">أتمتة الاجتماعات</span></div>
+                        <div class="image-pipeline">
+                            <span class="pipe-node bg-white/90 text-gray-700">Fireflies</span>
+                            <svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                            <span class="pipe-node bg-saudi text-white">N8N</span>
+                            <svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                            <span class="pipe-node bg-white/90 text-gray-700">GPT-4o</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-base font-bold text-gray-900 mb-2 leading-snug">وكيل ذكاء اصطناعي لإدارة الاجتماعات</h3>
+                        <p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">وكيل AI يستمع لاجتماعاتك، يحلل المحادثات، يستخرج المهام تلقائياً، ويوزعها على الفريق.</p>
+                        <div class="kpi-strip mb-4">
+                            <div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase tracking-wider">النتيجة</div><div class="text-[11px] font-bold text-saudi">95% تقليل يدوي</div></div>
+                            <div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase tracking-wider">الأثر</div><div class="text-[11px] font-bold text-saudi">صفر مهام مفقودة</div></div>
+                        </div>
+                        <div class="action-buttons">
+                            <button onclick="openProjectDetail('project-01')" class="action-btn btn-preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><span>نظرة سريعة</span></button>
+                            <a href="Manager/1.html" class="action-btn btn-details"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg><span>التفاصيل</span></a>
+                            <a href="Manager/1.json" download class="action-btn btn-download"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>تحميل</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مشروع 2 -->
+                <div class="project-card fade-up stagger-2" style="--card-accent: #10b981;" data-category="إدارة المهام" data-id="project-02" data-title="تتبع مهام Trello تلقائياً في Google Sheets" data-tags="N8N,Trello,Google Sheets">
+                    <div class="project-image-wrapper">
+                        <img src="Manager/2.jpg" alt="تتبع مهام Trello" class="project-image" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-emerald-50','to-teal-100');">
+                        <div class="project-image-overlay"></div>
+                        <div class="image-badge"><span class="bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">إدارة المهام</span></div>
+                        <div class="image-pipeline"><span class="pipe-node bg-white/90 text-gray-700">Trello</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-saudi text-white">N8N</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-white/90 text-gray-700">Sheets</span></div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-base font-bold text-gray-900 mb-2 leading-snug">تتبع مهام Trello تلقائياً في Google Sheets</h3>
+                        <p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">نظام أتمتة يسحب جميع مهام Trello يومياً ويسجلها في جداول جوجل لتتبع تقدم المشاريع.</p>
+                        <div class="kpi-strip mb-4"><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">التوفير</div><div class="text-[11px] font-bold text-saudi">3+ ساعات/أسبوع</div></div><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">الأثر</div><div class="text-[11px] font-bold text-saudi">سجل تاريخي كامل</div></div></div>
+                        <div class="action-buttons"><button onclick="openProjectDetail('project-02')" class="action-btn btn-preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><span>نظرة سريعة</span></button><a href="Manager/2.html" class="action-btn btn-details"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg><span>التفاصيل</span></a><a href="Manager/2.json" download class="action-btn btn-download"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>تحميل</span></a></div>
+                    </div>
+                </div>
+
+                <!-- مشروع 3 -->
+                <div class="project-card fade-up stagger-3" style="--card-accent: #8b5cf6;" data-category="وكلاء الذكاء الاصطناعي" data-id="project-03" data-title="بوت تيليجرام الذكي للمهام الصوتية" data-tags="N8N,Telegram,Whisper,Groq AI">
+                    <div class="project-image-wrapper">
+                        <img src="Manager/4.jpg" alt="بوت تيليجرام الذكي" class="project-image" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-violet-50','to-fuchsia-100');">
+                        <div class="project-image-overlay"></div>
+                        <div class="image-badge"><span class="bg-purple-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">وكلاء AI</span></div>
+                        <div class="image-pipeline"><span class="pipe-node bg-white/90 text-gray-700">Telegram</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-saudi text-white">N8N</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-white/90 text-gray-700">Whisper</span></div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-base font-bold text-gray-900 mb-2 leading-snug">بوت تيليجرام الذكي للمهام الصوتية</h3>
+                        <p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">بوت يحوّل رسائلك الصوتية إلى مهام منظمة في Trello تلقائياً باستخدام تفريغ Whisper.</p>
+                        <div class="kpi-strip mb-4"><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">السرعة</div><div class="text-[11px] font-bold text-saudi">10 ثوانٍ فقط</div></div><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">التوفر</div><div class="text-[11px] font-bold text-saudi">عمل 24/7</div></div></div>
+                        <div class="action-buttons"><button onclick="openProjectDetail('project-03')" class="action-btn btn-preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><span>نظرة سريعة</span></button><a href="Manager/4.html" class="action-btn btn-details"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg><span>التفاصيل</span></a><a href="Manager/4.json" download class="action-btn btn-download"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>تحميل</span></a></div>
+                    </div>
+                </div>
+
+                <!-- مشروع 4 -->
+                <div class="project-card fade-up stagger-4" style="--card-accent: #0ea5e9;" data-category="أتمتة الاجتماعات" data-id="project-04" data-title="تقرير أسبوعي ذكي لـ Microsoft Teams" data-tags="N8N,MS Teams,GPT-4.1,Google Docs">
+                    <div class="project-image-wrapper"><img src="Manager/5.jpg" alt="تقرير أسبوعي ذكي" class="project-image" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-sky-50','to-cyan-100');"><div class="project-image-overlay"></div><div class="image-badge"><span class="bg-blue-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">أتمتة الاجتماعات</span></div><div class="image-pipeline"><span class="pipe-node bg-white/90 text-gray-700">Teams</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-saudi text-white">N8N</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-white/90 text-gray-700">GPT-4.1</span></div></div>
+                    <div class="p-5"><h3 class="text-base font-bold text-gray-900 mb-2 leading-snug">تقرير أسبوعي ذكي لـ Microsoft Teams</h3><p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">يحلل محادثات فريقك على Teams أسبوعياً بالذكاء الاصطناعي ويُنشئ تقريراً شاملاً.</p><div class="kpi-strip mb-4"><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">التوفير</div><div class="text-[11px] font-bold text-saudi">5+ ساعات</div></div><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">التحليل</div><div class="text-[11px] font-bold text-saudi">فردي وجماعي</div></div></div><div class="action-buttons"><button onclick="openProjectDetail('project-04')" class="action-btn btn-preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><span>نظرة سريعة</span></button><a href="Manager/5.html" class="action-btn btn-details"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg><span>التفاصيل</span></a><a href="Manager/5.json" download class="action-btn btn-download"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>تحميل</span></a></div></div>
+                </div>
+
+                <!-- مشروع 5 -->
+                <div class="project-card fade-up stagger-5" style="--card-accent: #f59e0b;" data-category="إدارة المهام" data-id="project-05" data-title="تقرير Retrospective ذكي من Jira" data-tags="N8N,Jira,GPT-4o-mini,Google Docs">
+                    <div class="project-image-wrapper"><img src="Manager/6.jpg" alt="تقرير Retrospective" class="project-image" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-amber-50','to-orange-100');"><div class="project-image-overlay"></div><div class="image-badge"><span class="bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">إدارة المهام</span></div><div class="image-pipeline"><span class="pipe-node bg-white/90 text-gray-700">Jira</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-saudi text-white">N8N</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-white/90 text-gray-700">GPT-4o</span></div></div>
+                    <div class="p-5"><h3 class="text-base font-bold text-gray-900 mb-2 leading-snug">تقرير Retrospective ذكي من Jira</h3><p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">يُحلل مهام Jira المكتملة ويُنشئ تقرير Lessons Learned احترافي تلقائياً.</p><div class="kpi-strip mb-4"><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">التوفير</div><div class="text-[11px] font-bold text-saudi">4+ ساعات/Epic</div></div><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">التحليل</div><div class="text-[11px] font-bold text-saudi">6 أقسام</div></div></div><div class="action-buttons"><button onclick="openProjectDetail('project-05')" class="action-btn btn-preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><span>نظرة سريعة</span></button><a href="Manager/6.html" class="action-btn btn-details"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg><span>التفاصيل</span></a><a href="Manager/6.json" download class="action-btn btn-download"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>تحميل</span></a></div></div>
+                </div>
+
+                <!-- مشروع 6 -->
+                <div class="project-card fade-up stagger-6" style="--card-accent: #8b5cf6;" data-category="وكلاء الذكاء الاصطناعي" data-id="project-06" data-title="نظام ذكي لإدارة تسليم المشاريع" data-tags="N8N,Claude 3.5 Sonnet,Multi-Agent API">
+                    <div class="project-image-wrapper"><img src="Manager/7.jpg" alt="نظام ذكي لإدارة تسليم المشاريع" class="project-image" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-rose-50','to-red-100');"><div class="project-image-overlay"></div><div class="image-badge"><span class="bg-purple-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">وكلاء AI</span></div><div class="image-pipeline"><span class="pipe-node bg-white/90 text-gray-700">Claude</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-saudi text-white">N8N</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-white/90 text-gray-700">Multi-Agent</span></div></div>
+                    <div class="p-5"><h3 class="text-base font-bold text-gray-900 mb-2 leading-snug">نظام ذكي لإدارة تسليم المشاريع</h3><p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">أوركسترا من 5 وكلاء AI لتحليل المشاريع، تقدير الجهد، توزيع المهام تلقائياً.</p><div class="kpi-strip mb-4"><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">الوكلاء</div><div class="text-[11px] font-bold text-saudi">5 وكلاء AI</div></div><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">الأثر</div><div class="text-[11px] font-bold text-saudi">كشف مبكر</div></div></div><div class="action-buttons"><button onclick="openProjectDetail('project-06')" class="action-btn btn-preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><span>نظرة سريعة</span></button><a href="Manager/7.html" class="action-btn btn-details"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg><span>التفاصيل</span></a><a href="Manager/7.json" download class="action-btn btn-download"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>تحميل</span></a></div></div>
+                </div>
+
+                <!-- مشروع 7 -->
+                <div class="project-card fade-up stagger-7" style="--card-accent: #22c55e;" data-category="وكلاء الذكاء الاصطناعي" data-id="project-07" data-title="مدير مشاريع ذكي بالمحادثة" data-tags="N8N Chat,GPT-4.1 Mini,Google Sheets">
+                    <div class="project-image-wrapper"><img src="Manager/8.jpg" alt="مدير مشاريع ذكي" class="project-image" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-lime-50','to-emerald-100');"><div class="project-image-overlay"></div><div class="image-badge"><span class="bg-purple-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">وكلاء AI</span></div><div class="image-pipeline"><span class="pipe-node bg-white/90 text-gray-700">Chat</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-saudi text-white">GPT-4.1</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-white/90 text-gray-700">Sheets</span></div></div>
+                    <div class="p-5"><h3 class="text-base font-bold text-gray-900 mb-2 leading-snug">مدير مشاريع ذكي بالمحادثة</h3><p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">وكيل ذكاء اصطناعي يحوّل محادثاتك النصية إلى مهام منظمة في Google Sheets.</p><div class="kpi-strip mb-4"><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">السرعة</div><div class="text-[11px] font-bold text-saudi">أسرع 5x</div></div><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">الذكاء</div><div class="text-[11px] font-bold text-saudi">ذاكرة سياق</div></div></div><div class="action-buttons"><button onclick="openProjectDetail('project-07')" class="action-btn btn-preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><span>نظرة سريعة</span></button><a href="Manager/8.html" class="action-btn btn-details"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg><span>التفاصيل</span></a><a href="Manager/8.json" download class="action-btn btn-download"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>تحميل</span></a></div></div>
+                </div>
+
+                <!-- مشروع 8 -->
+                <div class="project-card fade-up stagger-8" style="--card-accent: #f97316;" data-category="إشعارات وتصعيد" data-id="project-08" data-title="ربط Trello مع Telegram و Supabase" data-tags="N8N,Trello,Telegram,Supabase">
+                    <div class="project-image-wrapper"><img src="Manager/9.jpg" alt="ربط Trello مع Telegram" class="project-image" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-orange-50','to-yellow-100');"><div class="project-image-overlay"></div><div class="image-badge"><span class="bg-orange-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">إشعارات وتصعيد</span></div><div class="image-pipeline"><span class="pipe-node bg-white/90 text-gray-700">Trello</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-saudi text-white">N8N</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-white/90 text-gray-700">Telegram</span></div></div>
+                    <div class="p-5"><h3 class="text-base font-bold text-gray-900 mb-2 leading-snug">ربط Trello مع Telegram و Supabase</h3><p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">إشعارات فورية عند تعيين المهام، تنبيهات للمواعيد النهائية، ورسائل مخصصة.</p><div class="kpi-strip mb-4"><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">الأنظمة</div><div class="text-[11px] font-bold text-saudi">3 أنظمة فرعية</div></div><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">الأثر</div><div class="text-[11px] font-bold text-saudi">صفر مفقود</div></div></div><div class="action-buttons"><button onclick="openProjectDetail('project-08')" class="action-btn btn-preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><span>نظرة سريعة</span></button><a href="Manager/9.html" class="action-btn btn-details"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg><span>التفاصيل</span></a><a href="Manager/9.json" download class="action-btn btn-download"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>تحميل</span></a></div></div>
+                </div>
+
+                <!-- مشروع 9 -->
+                <div class="project-card fade-up stagger-9" style="--card-accent: #6366f1;" data-category="وكلاء الذكاء الاصطناعي" data-id="project-09" data-title="مراقبة تنفيذ البناء بالذكاء الاصطناعي" data-tags="N8N,GPT-4.1 Vision,Google Drive,Gmail">
+                    <div class="project-image-wrapper"><img src="Manager/10.jpg" alt="مراقبة تنفيذ البناء" class="project-image" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-slate-50','to-zinc-200');"><div class="project-image-overlay"></div><div class="image-badge"><span class="bg-purple-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">وكلاء AI</span></div><div class="image-pipeline"><span class="pipe-node bg-white/90 text-gray-700">Drive</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-saudi text-white">N8N</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-white/90 text-gray-700">Vision AI</span></div></div>
+                    <div class="p-5"><h3 class="text-base font-bold text-gray-900 mb-2 leading-snug">مراقبة تنفيذ البناء بالذكاء الاصطناعي</h3><p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">يحلل صور مواقع البناء عبر Vision AI، يكتشف العيوب والمخاطر الهندسية.</p><div class="kpi-strip mb-4"><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">التحليل</div><div class="text-[11px] font-bold text-saudi">5 محاور</div></div><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">التوفير</div><div class="text-[11px] font-bold text-saudi">12,000+ ر/ش</div></div></div><div class="action-buttons"><button onclick="openProjectDetail('project-09')" class="action-btn btn-preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><span>نظرة سريعة</span></button><a href="Manager/10.html" class="action-btn btn-details"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg><span>التفاصيل</span></a><a href="Manager/10.json" download class="action-btn btn-download"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>تحميل</span></a></div></div>
+                </div>
+
+                <!-- مشروع 10 -->
+                <div class="project-card fade-up stagger-10" style="--card-accent: #3b82f6;" data-category="أتمتة الاجتماعات" data-id="project-10" data-title="سكرم ماستر افتراضي بالذكاء الاصطناعي" data-tags="N8N,Slack,Asana,o4-mini">
+                    <div class="project-image-wrapper"><img src="Manager/11.jpg" alt="سكرم ماستر افتراضي" class="project-image" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-indigo-50','to-violet-100');"><div class="project-image-overlay"></div><div class="image-badge"><span class="bg-blue-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">أتمتة الاجتماعات</span></div><div class="image-pipeline"><span class="pipe-node bg-white/90 text-gray-700">Slack</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-saudi text-white">N8N</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-white/90 text-gray-700">Asana</span></div></div>
+                    <div class="p-5"><h3 class="text-base font-bold text-gray-900 mb-2 leading-snug">سكرم ماستر افتراضي بالذكاء الاصطناعي</h3><p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">يدير اجتماعات السكرم اليومية، يسأل الفريق عبر Slack، ويولّد تقارير ذكية.</p><div class="kpi-strip mb-4"><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">البديل</div><div class="text-[11px] font-bold text-saudi">Daily Standup</div></div><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">التوفير</div><div class="text-[11px] font-bold text-saudi">15 دقيقة/مطور</div></div></div><div class="action-buttons"><button onclick="openProjectDetail('project-10')" class="action-btn btn-preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><span>نظرة سريعة</span></button><a href="Manager/11.html" class="action-btn btn-details"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg><span>التفاصيل</span></a><a href="Manager/11.json" download class="action-btn btn-download"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>تحميل</span></a></div></div>
+                </div>
+
+                <!-- مشروع 11 -->
+                <div class="project-card fade-up stagger-11" style="--card-accent: #06b6d4;" data-category="أتمتة الاجتماعات" data-id="project-11" data-title="مساعد اجتماعات Zoom الذكي" data-tags="N8N,Zoom API,Claude 3.7,ClickUp,Outlook">
+                    <div class="project-image-wrapper"><img src="Manager/12.jpg" alt="مساعد اجتماعات Zoom" class="project-image" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-cyan-50','to-emerald-100');"><div class="project-image-overlay"></div><div class="image-badge"><span class="bg-blue-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">أتمتة الاجتماعات</span></div><div class="image-pipeline"><span class="pipe-node bg-white/90 text-gray-700">Zoom</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-saudi text-white">N8N</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-white/90 text-gray-700">Claude</span></div></div>
+                    <div class="p-5"><h3 class="text-base font-bold text-gray-900 mb-2 leading-snug">مساعد اجتماعات Zoom الذكي</h3><p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">يسحب تسجيلات Zoom، يُنشئ محاضر، يوزع المهام على ClickUp، ويجدول المتابعات.</p><div class="kpi-strip mb-4"><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">المراحل</div><div class="text-[11px] font-bold text-saudi">6 مراحل</div></div><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">التوفير</div><div class="text-[11px] font-bold text-saudi">90 دقيقة</div></div></div><div class="action-buttons"><button onclick="openProjectDetail('project-11')" class="action-btn btn-preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><span>نظرة سريعة</span></button><a href="Manager/12.html" class="action-btn btn-details"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg><span>التفاصيل</span></a><a href="Manager/12.json" download class="action-btn btn-download"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>تحميل</span></a></div></div>
+                </div>
+
+                <!-- مشروع 12 -->
+                <div class="project-card fade-up stagger-11" style="--card-accent: #ef4444;" data-category="إشعارات وتصعيد" data-id="project-12" data-title="نظام تنبيه وتصعيد المهام العاجلة" data-tags="N8N,Google Sheets,Gmail,Telegram,Jira">
+                    <div class="project-image-wrapper"><img src="Manager/13.jpg" alt="نظام تنبيه وتصعيد" class="project-image" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-red-50','to-orange-100');"><div class="project-image-overlay"></div><div class="image-badge"><span class="bg-orange-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">إشعارات وتصعيد</span></div><div class="image-pipeline"><span class="pipe-node bg-white/90 text-gray-700">Sheets</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-saudi text-white">N8N</span><svg class="pipe-arrow w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg><span class="pipe-node bg-white/90 text-gray-700">Jira</span></div></div>
+                    <div class="p-5"><h3 class="text-base font-bold text-gray-900 mb-2 leading-snug">نظام تنبيه وتصعيد المهام العاجلة</h3><p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">يراقب المهام العاجلة، يُرسل تنبيهات بريدية، ويُصعّد تلقائياً عبر Telegram وJira.</p><div class="kpi-strip mb-4"><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">التصعيد</div><div class="text-[11px] font-bold text-saudi">3 مراحل</div></div><div class="kpi-item"><div class="text-[9px] text-gray-400 uppercase">التغطية</div><div class="text-[11px] font-bold text-saudi">100% حرجة</div></div></div><div class="action-buttons"><button onclick="openProjectDetail('project-12')" class="action-btn btn-preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><span>نظرة سريعة</span></button><a href="Manager/13.html" class="action-btn btn-details"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg><span>التفاصيل</span></a><a href="Manager/13.json" download class="action-btn btn-download"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>تحميل</span></a></div></div>
+                </div>
+
+            </div>
+
+            <!-- لا نتائج -->
+            <div id="no-results" class="hidden text-center py-20">
+                <div class="text-6xl mb-4">🔍</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">لم يتم العثور على مشاريع</h3>
+                <p class="text-gray-500 mb-6">جرّب تغيير معايير البحث أو الفلترة</p>
+                <button onclick="filterProjects('all', document.querySelector('[data-filter=all]'))" class="px-6 py-2.5 bg-saudi text-white rounded-lg font-bold hover:bg-saudi-light">عرض الكل</button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA -->
+    <section class="py-20 bg-saudi text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10"><svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0 0 L100 100 M100 0 L0 100" stroke="white" stroke-width="0.5"/></svg></div>
+        <div class="container mx-auto px-4 text-center relative z-10 fade-up">
+            <div class="text-5xl mb-6">🚀</div>
+            <h2 class="text-3xl lg:text-4xl font-bold mb-6">هل لديك فكرة لمشروع أتمتة؟</h2>
+            <p class="text-xl text-green-100 mb-8 max-w-3xl mx-auto">كل عمل له تحدياته الفريدة. أخبرني بتحدياتك وسأصمم لك حلاً مخصصاً.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="index.html#contact" class="inline-flex items-center gap-2 bg-white text-saudi font-bold py-4 px-10 rounded-full shadow-lg hover:bg-gray-100 transition-all transform hover:scale-105"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg><span>استشارة مجانية (15 دقيقة)</span></a>
+                <a href="https://wa.me/967718672576" target="_blank" class="inline-flex items-center gap-2 bg-green-500 text-white font-bold py-4 px-10 rounded-full shadow-lg hover:bg-green-600 transition-all transform hover:scale-105"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg><span>تواصل عبر واتساب</span></a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- الفوتر -->
+    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-3 gap-10 mb-12">
-                <div>
-                    <a href="index.html" class="text-2xl font-bold text-white tracking-wide inline-block mb-4">
-                        عبدالله <span class="text-saudi">نبيل</span>
-                        <span class="block text-xs text-gray-500 font-normal -mt-1">خبير أتمتة N8N</span>
-                    </a>
-                    <p class="text-gray-400 text-sm leading-relaxed">متخصص في أتمتة الأعمال ودمج الذكاء الاصطناعي لمساعدة الشركات على تحقيق كفاءة تشغيلية غير مسبوقة.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4">صفحات المشاريع</h4>
-                    <ul class="space-y-2">
-                        <li><a href="projects.html" class="text-gray-400 hover:text-white transition-colors text-sm font-bold">📋 جميع المشاريع</a></li>
-                        <li><a href="projects-management.html" class="text-gray-400 hover:text-white transition-colors text-sm">📋 إدارة المشاريع (10 مشاريع)</a></li>
-                        <li><a href="projects-hr.html" class="text-gray-400 hover:text-white transition-colors text-sm">👥 الموارد البشرية (10 مشاريع)</a></li>
-                        <li><a href="projects-marketing.html" class="text-gray-400 hover:text-white transition-colors text-sm">📢 Marketing Ops (19 مشروع)</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4">تابعني</h4>
-                    <div class="flex gap-3">
-                        <a href="https://linkedin.com/abdullah_nabil_n8n" target="_blank" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:bg-saudi hover:text-white transition-all" title="LinkedIn">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                        </a>
-                        <a href="https://x.com/abdullah_nabil_" target="_blank" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:bg-gray-700 hover:text-white transition-all" title="X (Twitter)">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        </a>
-                        <a href="https://wa.me/967718672576" target="_blank" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:bg-green-500 hover:text-white transition-all" title="WhatsApp">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
-                        </a>
-                        <a href="https://github.com/abdullah-nabil" target="_blank" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:bg-gray-700 hover:text-white transition-all" title="GitHub">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                        </a>
-                    </div>
-                    <div class="mt-6">
-                        <h4 class="font-bold text-white mb-2 text-sm">احصل على نصائح أتمتة مجانية</h4>
-                        <p class="text-gray-500 text-xs mb-3">انضم لأكثر من 500 متابع.</p>
-                        <div class="flex gap-2">
-                            <input type="email" placeholder="بريدك الإلكتروني" class="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-500 focus:border-saudi outline-none" dir="ltr">
-                            <button class="px-4 py-2 bg-saudi rounded-lg text-white text-sm font-bold hover:bg-saudi-light transition-colors">اشترك</button>
-                        </div>
-                    </div>
-                </div>
+                <div><a href="index.html" class="text-2xl font-bold text-white inline-block mb-4">عبدالله <span class="text-saudi">نبيل</span><span class="block text-xs text-gray-500 font-normal -mt-1">خبير أتمتة N8N</span></a><p class="text-gray-400 text-sm leading-relaxed">متخصص في أتمتة الأعمال ودمج الذكاء الاصطناعي.</p></div>
+                <div><h4 class="font-bold text-white mb-4">روابط سريعة</h4><ul class="space-y-2"><li><a href="index.html" class="text-gray-400 hover:text-white text-sm">الرئيسية</a></li><li><a href="index.html#services" class="text-gray-400 hover:text-white text-sm">الخدمات</a></li><li><a href="projects.html" class="text-white font-bold text-sm">المشاريع</a></li><li><a href="index.html#contact" class="text-gray-400 hover:text-white text-sm">تواصل معي</a></li></ul></div>
+                <div><h4 class="font-bold text-white mb-4">تابعني</h4><div class="flex gap-3"><a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:bg-saudi hover:text-white transition-all"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a><a href="https://wa.me/967718672576" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:bg-green-500 hover:text-white transition-all"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg></a></div></div>
             </div>
-            <div class="border-t border-gray-800 pt-8">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p class="text-sm text-gray-500">جميع الحقوق محفوظة لعبدالله نبيل © 2024 | صُنع بفخر في السعودية 🇸🇦</p>
-                    <div class="flex items-center gap-4 text-xs text-gray-500">
-                        <a href="#" class="hover:text-white transition-colors">سياسة الخصوصية</a>
-                        <span>|</span>
-                        <a href="#" class="hover:text-white transition-colors">الشروط والأحكام</a>
-                    </div>
-                </div>
-            </div>
+            <div class="border-t border-gray-800 pt-8"><p class="text-sm text-gray-500 text-center">جميع الحقوق محفوظة لعبدالله نبيل © 2024 | صُنع بفخر 🇸🇦</p></div>
         </div>
     </footer>
 
-    <!-- ============================================
-         FLOATING WHATSAPP BUTTON
-         ============================================ -->
-    <a href="https://wa.me/967718672576" target="_blank"
-       class="fixed bottom-6 left-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-all duration-300 hover:scale-110 group"
-       title="تواصل عبر واتساب"
-       style="animation: float 3s ease-in-out infinite;">
-        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
-        <span class="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-gray-800 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap hidden md:block pointer-events-none shadow-lg">
-            تواصل مباشرة عبر واتساب
-        </span>
-        <span class="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-30"></span>
-    </a>
+    <!-- واتساب -->
+    <a href="https://wa.me/967718672576" target="_blank" class="fixed bottom-6 left-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-all hover:scale-110" style="animation: float 3s ease-in-out infinite;"><svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg><span class="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-30"></span></a>
 
-    <!-- ============================================
-         JAVASCRIPT
-         ============================================ -->
+   
+    <!-- Modal -->
+    <div id="project-detail-modal" class="fixed inset-0 z-[100] hidden overflow-y-auto">
+        <div class="fixed inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity duration-300 opacity-0" id="detail-backdrop"></div>
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div class="relative transform overflow-hidden rounded-2xl bg-white text-right shadow-xl transition-all duration-300 sm:w-full sm:max-w-2xl opacity-0 scale-95" id="detail-panel">
+                <div class="absolute top-4 left-4 z-10"><button class="rounded-full bg-gray-100 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-200" onclick="closeProjectDetail()"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button></div>
+                <div class="p-6 sm:p-8" id="detail-content"></div>
+                <div class="bg-gray-50 px-6 py-4 flex flex-col sm:flex-row-reverse gap-3">
+                    <a href="" id="detail-project-link" class="inline-flex justify-center rounded-lg bg-saudi px-5 py-2.5 text-sm font-semibold text-white hover:bg-saudi-light">عرض التفاصيل الكاملة</a>
+                    <a href="" id="detail-download-link" download class="inline-flex justify-center rounded-lg bg-gray-200 px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-300 items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>تحميل المشروع</a>
+                    <button onclick="closeProjectDetail()" class="inline-flex justify-center rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // =============================================
-        // COUNTER ANIMATION
-        // =============================================
-        function animateCounter(element, target, suffix = '') {
-            let current = 0;
-            const increment = Math.ceil(target / 40);
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                element.textContent = current + suffix;
-            }, 30);
-        }
+    const projectDetails = {
+        'project-01': { title: 'وكيل ذكاء اصطناعي لإدارة الاجتماعات', category: 'أتمتة الاجتماعات', catColor: 'blue', desc: 'وكيل AI متقدم يستمع لاجتماعاتك عبر Fireflies، يحلل المحادثات باستخدام GPT-4o، يستخرج المهام والقرارات تلقائياً، ويوزعها على الفريق عبر Airtable مع إشعارات بريدية فورية.', metrics: ['95% تقليل العمل اليدوي', 'صفر مهام مفقودة'], tech: ['N8N', 'GPT-4o', 'Fireflies', 'Airtable', 'Gmail'], link: 'Manager/1.html', download: 'Manager/1.json', img: 'Manager/1.jpg' },
+        'project-02': { title: 'تتبع مهام Trello تلقائياً في Google Sheets', category: 'إدارة المهام', catColor: 'emerald', desc: 'نظام أتمتة يسحب جميع مهام Trello يومياً ويسجلها في جداول جوجل مع سجل تاريخي كامل.', metrics: ['توفير 3+ ساعات أسبوعياً', 'سجل تاريخي كامل'], tech: ['N8N', 'Trello', 'Google Sheets'], link: 'Manager/2.html', download: 'Manager/2.json', img: 'Manager/2.jpg' },
+        'project-03': { title: 'بوت تيليجرام الذكي للمهام الصوتية', category: 'وكلاء الذكاء الاصطناعي', catColor: 'purple', desc: 'بوت تيليجرام ذكي يحوّل رسائلك الصوتية إلى مهام منظمة في Trello باستخدام Whisper و Groq AI.', metrics: ['صوت إلى مهمة في 10 ثوانٍ', 'عمل 24/7'], tech: ['N8N', 'Telegram', 'Whisper', 'Groq AI'], link: 'Manager/4.html', download: 'Manager/4.json', img: 'Manager/4.jpg' },
+        'project-04': { title: 'تقرير أسبوعي ذكي لـ Microsoft Teams', category: 'أتمتة الاجتماعات', catColor: 'blue', desc: 'يحلل محادثات Teams أسبوعياً باستخدام GPT-4.1 ويُنشئ تقريراً شاملاً بتحليل فردي وجماعي.', metrics: ['توفير 5+ ساعات', 'تحليل فردي وجماعي'], tech: ['N8N', 'MS Teams', 'GPT-4.1', 'Google Docs'], link: 'Manager/5.html', download: 'Manager/5.json', img: 'Manager/5.jpg' },
+        'project-05': { title: 'تقرير Retrospective ذكي من Jira', category: 'إدارة المهام', catColor: 'emerald', desc: 'يُحلل مهام Jira المكتملة (Epics) ويُنشئ تقرير Lessons Learned احترافي بـ 6 أقسام تحليلية.', metrics: ['توفير 4+ ساعات لكل Epic', 'تحليل 6 أقسام'], tech: ['N8N', 'Jira', 'GPT-4o-mini', 'Google Docs'], link: 'Manager/6.html', download: 'Manager/6.json', img: 'Manager/6.jpg' },
+        'project-06': { title: 'نظام ذكي لإدارة تسليم المشاريع', category: 'وكلاء الذكاء الاصطناعي', catColor: 'purple', desc: 'أوركسترا من 5 وكلاء AI لتحليل المشاريع، تقدير الجهد، توزيع المهام، وإعادة التوازن تلقائياً.', metrics: ['5 وكلاء AI', 'كشف مبكر للتأخيرات'], tech: ['N8N', 'Claude 3.5 Sonnet', 'Multi-Agent API'], link: 'Manager/7.html', download: 'Manager/7.json', img: 'Manager/7.jpg' },
+        'project-07': { title: 'مدير مشاريع ذكي بالمحادثة', category: 'وكلاء الذكاء الاصطناعي', catColor: 'purple', desc: 'وكيل ذكاء اصطناعي يفهم محادثاتك النصية ويحوّلها إلى مهام منظمة بذاكرة سياق ذكية.', metrics: ['أسرع 5x', 'ذاكرة سياق ذكية'], tech: ['N8N Chat', 'GPT-4.1 Mini', 'Google Sheets'], link: 'Manager/8.html', download: 'Manager/8.json', img: 'Manager/8.jpg' },
+        'project-08': { title: 'ربط Trello مع Telegram و Supabase', category: 'إشعارات وتصعيد', catColor: 'orange', desc: 'نظام متكامل من 3 أنظمة فرعية: إشعارات فورية، تنبيهات مواعيد، ورسائل مخصصة.', metrics: ['3 أنظمة فرعية', 'صفر مواعيد مفقودة'], tech: ['N8N', 'Trello', 'Telegram', 'Supabase'], link: 'Manager/9.html', download: 'Manager/9.json', img: 'Manager/9.jpg' },
+        'project-09': { title: 'مراقبة تنفيذ البناء بالذكاء الاصطناعي', category: 'وكلاء الذكاء الاصطناعي', catColor: 'purple', desc: 'يحلل صور مواقع البناء عبر GPT-4.1 Vision ويكتشف العيوب والمخاطر عبر 5 محاور.', metrics: ['تحليل 5 محاور', '12,000+ ريال/شهر'], tech: ['N8N', 'GPT-4.1 Vision', 'Google Drive', 'Gmail'], link: 'Manager/10.html', download: 'Manager/10.json', img: 'Manager/10.jpg' },
+        'project-10': { title: 'سكرم ماستر افتراضي بالذكاء الاصطناعي', category: 'أتمتة الاجتماعات', catColor: 'blue', desc: 'بديل ذكي لاجتماعات السكرم اليومية. يسأل الفريق عبر Slack ويولّد تقارير شاملة.', metrics: ['بديل Daily Standup', '15 دقيقة/مطور'], tech: ['N8N', 'Slack', 'Asana', 'o4-mini'], link: 'Manager/11.html', download: 'Manager/11.json', img: 'Manager/11.jpg' },
+        'project-11': { title: 'مساعد اجتماعات Zoom الذكي', category: 'أتمتة الاجتماعات', catColor: 'blue', desc: 'نظام من 6 مراحل: يسحب تسجيلات Zoom، يُنشئ محاضر، يستخرج المهام ويوزعها على ClickUp.', metrics: ['6 مراحل أتمتة', '90 دقيقة/اجتماع'], tech: ['N8N', 'Zoom API', 'Claude 3.7', 'ClickUp', 'Outlook'], link: 'Manager/12.html', download: 'Manager/12.json', img: 'Manager/12.jpg' },
+        'project-12': { title: 'نظام تنبيه وتصعيد المهام العاجلة', category: 'إشعارات وتصعيد', catColor: 'orange', desc: 'نظام مراقبة بـ 3 مراحل تصعيد يراقب المهام العاجلة ويُصعّد تلقائياً.', metrics: ['3 مراحل تصعيد', '100% تغطية حرجة'], tech: ['N8N', 'Google Sheets', 'Gmail', 'Telegram', 'Jira'], link: 'Manager/13.html', download: 'Manager/13.json', img: 'Manager/13.jpg' }
+    };
 
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const statProjects = document.getElementById('stat-projects');
-                    const statTools = document.getElementById('stat-tools');
-                    if (statProjects) animateCounter(statProjects, 39, '+');
-                    if (statTools) animateCounter(statTools, 30, '+');
-                    counterObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        const statsSection = document.getElementById('stat-projects');
-        if (statsSection) counterObserver.observe(statsSection.closest('.flex'));
-
-
-        // =============================================
-        // SCROLL ANIMATIONS
-        // =============================================
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const delay = entry.target.style.transitionDelay || '0ms';
-                    entry.target.style.transitionDelay = delay;
-                    entry.target.classList.add('visible');
-                    scrollObserver.unobserve(entry.target);
-                }
-            });
-        }, { root: null, rootMargin: '0px', threshold: 0.1 });
-
-        document.querySelectorAll('.fade-up').forEach(el => scrollObserver.observe(el));
-
-
-        // =============================================
-        // NAVBAR SHADOW
-        // =============================================
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 10) {
-                navbar.classList.add('shadow-md');
-            } else {
-                navbar.classList.remove('shadow-md');
-            }
-        }, { passive: true });
-
-
-        // =============================================
-        // MOBILE MENU
-        // =============================================
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIconOpen = document.getElementById('menu-icon-open');
-        const menuIconClose = document.getElementById('menu-icon-close');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            menuIconOpen.classList.toggle('hidden');
-            menuIconClose.classList.toggle('hidden');
+    function animateCounters() {
+        document.querySelectorAll('.counter').forEach(c => {
+            const t = parseInt(c.dataset.target), d = 1500, s = performance.now();
+            (function u(n) { const p = Math.min((n-s)/d, 1); c.textContent = Math.floor(t*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(u); else c.textContent=t; })(s);
         });
+    }
 
-        document.querySelectorAll('.mobile-nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                menuIconOpen.classList.remove('hidden');
-                menuIconClose.classList.add('hidden');
-            });
+    function switchView(v) {
+        const g=document.getElementById('projects-grid'), gb=document.getElementById('view-grid-btn'), lb=document.getElementById('view-list-btn');
+        if(v==='grid'){g.className='grid md:grid-cols-2 xl:grid-cols-3 gap-6';gb.classList.add('active');gb.classList.remove('text-gray-400','bg-transparent');lb.classList.remove('active');lb.classList.add('text-gray-400','bg-transparent');}
+        else{g.className='grid grid-cols-1 lg:grid-cols-2 gap-4';lb.classList.add('active');lb.classList.remove('text-gray-400','bg-transparent');gb.classList.remove('active');gb.classList.add('text-gray-400','bg-transparent');}
+    }
+
+    function filterProjects(f, b) {
+        document.querySelectorAll('.filter-tab').forEach(t=>{t.classList.remove('active','bg-saudi','text-white');t.classList.add('text-gray-600');});
+        if(b){b.classList.add('active','bg-saudi','text-white');b.classList.remove('text-gray-600');}
+        let c=0; document.querySelectorAll('.project-card').forEach((card,i)=>{
+            if(f==='all'||card.dataset.category===f){card.style.display='';card.style.opacity='0';card.style.transform='translateY(20px)';setTimeout(()=>{card.style.opacity='1';card.style.transform='translateY(0)';},i*60);c++;}else card.style.display='none';
         });
+        document.getElementById('visible-count').textContent=c;
+        document.getElementById('no-results').classList.toggle('hidden',c>0);
+    }
 
-
-        // =============================================
-        // SMOOTH SCROLL
-        // =============================================
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#' || !targetId) return;
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    const headerOffset = 80;
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                }
-            });
+    function searchProjects(q) {
+        const sug=document.getElementById('search-suggestions'); let c=0, suggestions=[];
+        q=q.trim().toLowerCase();
+        document.querySelectorAll('.project-card').forEach(card=>{
+            const t=(card.dataset.title||'').toLowerCase(), tags=(card.dataset.tags||'').toLowerCase(), cat=(card.dataset.category||'').toLowerCase();
+            if(!q||t.includes(q)||tags.includes(q)||cat.includes(q)){card.style.display='';c++;if(q&&suggestions.length<5)suggestions.push({title:card.dataset.title});}else card.style.display='none';
         });
+        document.getElementById('visible-count').textContent=c;
+        document.getElementById('no-results').classList.toggle('hidden',c>0);
+        if(q&&suggestions.length>0){sug.innerHTML=suggestions.map(s=>`<button onclick="document.getElementById('search-input').value='${s.title}';searchProjects('${s.title}');document.getElementById('search-suggestions').classList.remove('show');" class="block w-full text-right px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50 hover:text-saudi border-b border-gray-50 last:border-0">${s.title}</button>`).join('');sug.classList.add('show');}else sug.classList.remove('show');
+    }
+    document.addEventListener('click',e=>{if(!e.target.closest('#search-input')&&!e.target.closest('#search-suggestions'))document.getElementById('search-suggestions').classList.remove('show');});
+
+    function openProjectDetail(id) {
+        const p=projectDetails[id]; if(!p)return;
+        document.getElementById('detail-content').innerHTML=`<div class="space-y-6">
+            <div class="h-52 rounded-xl overflow-hidden bg-gray-100"><img src="${p.img}" alt="${p.title}" class="w-full h-full object-contain p-3 bg-gray-50" onerror="this.parentElement.classList.add('bg-gradient-to-br','from-green-50','to-blue-50');this.style.display='none';"></div>
+            <div class="border-b border-gray-100 pb-4"><h3 class="text-2xl font-bold text-gray-900 mb-2">${p.title}</h3><span class="inline-block bg-${p.catColor}-100 text-${p.catColor}-800 text-xs font-bold px-3 py-1 rounded-full">${p.category}</span></div>
+            <div><h4 class="text-lg font-bold text-gray-900 mb-2">نظرة عامة</h4><p class="text-gray-600 leading-relaxed">${p.desc}</p></div>
+            <div class="bg-green-50 p-5 rounded-xl border border-green-100"><h4 class="text-lg font-bold text-saudi mb-3 flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>النتائج</h4><div class="grid grid-cols-2 gap-3">${p.metrics.map(m=>`<div class="bg-white rounded-lg p-3 border border-green-100 flex items-center gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm font-medium text-gray-700">${m}</span></div>`).join('')}</div></div>
+            <div><h4 class="text-lg font-bold text-gray-900 mb-3">التقنيات</h4><div class="flex flex-wrap gap-2">${p.tech.map(t=>`<span class="bg-gray-100 text-gray-700 px-4 py-1.5 rounded-lg text-sm font-medium border border-gray-200">${t}</span>`).join('')}</div></div>
+        </div>`;
+        document.getElementById('detail-project-link').href=p.link;
+        document.getElementById('detail-download-link').href=p.download;
+        const m=document.getElementById('project-detail-modal'); m.classList.remove('hidden');
+        requestAnimationFrame(()=>{document.getElementById('detail-backdrop').classList.replace('opacity-0','opacity-100');const pn=document.getElementById('detail-panel');pn.classList.remove('opacity-0','scale-95');pn.classList.add('opacity-100','scale-100');});
+        document.body.style.overflow='hidden';
+    }
+
+    function closeProjectDetail() {
+        document.getElementById('detail-backdrop').classList.replace('opacity-100','opacity-0');
+        const p=document.getElementById('detail-panel');p.classList.remove('opacity-100','scale-100');p.classList.add('opacity-0','scale-95');
+        setTimeout(()=>{document.getElementById('project-detail-modal').classList.add('hidden');document.body.style.overflow='';},300);
+    }
+    document.getElementById('project-detail-modal').addEventListener('click',e=>{if(e.target===e.currentTarget||e.target.classList.contains('backdrop-blur-sm'))closeProjectDetail();});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeProjectDetail();});
+
+   
+
+    document.getElementById('mobile-menu-btn').addEventListener('click',()=>{document.getElementById('mobile-menu').classList.toggle('hidden');document.getElementById('menu-icon-open').classList.toggle('hidden');document.getElementById('menu-icon-close').classList.toggle('hidden');});
+    document.querySelectorAll('.mobile-nav-link').forEach(l=>l.addEventListener('click',()=>{document.getElementById('mobile-menu').classList.add('hidden');document.getElementById('menu-icon-open').classList.remove('hidden');document.getElementById('menu-icon-close').classList.add('hidden');}));
+
+    const so=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');so.unobserve(e.target);}});},{threshold:0.1});
+    document.querySelectorAll('.fade-up').forEach(el=>so.observe(el));
+
+    window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('shadow-md',window.scrollY>10),{passive:true});
+
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-80,behavior:'smooth'});});});
+
+    document.addEventListener('DOMContentLoaded',()=>{
+        document.getElementById('visible-count').textContent=document.querySelectorAll('.project-card').length;
+        const co=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){animateCounters();co.disconnect();}});},{threshold:0.5});
+        const fc=document.querySelector('.counter');if(fc)co.observe(fc);
+    });
     </script>
+<script src="tracker.js"></script>
 </body>
 </html>
