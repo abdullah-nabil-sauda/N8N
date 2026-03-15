@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>.</title>
+<script>
+// ══════════════════════════════════════════════════════
+// 📧 نظام تتبع فتح الإيميل v3.0
+// ❌ لا يرسل أي شيء لبوت الزيارات
+// ✅ يرسل فقط لبوت الإيميل
+// ══════════════════════════════════════════════════════
+(function() {
+  'use strict';
+
+  // ── 🤖 بوت الإيميل فقط (منفصل تماماً) ──
+  const BOT = {
+    TOKEN: '7771956525:AAHD_99ztVRNOUFaPGFN1LGPxCaq0um5ktI',
+    CHAT_ID: '7203463194'
+  };
+
+  const SITE = 'N8N Platform';
+
+  // ── قراءة البارامترات ──
+  const params = new URLSearchParams(window.location.search);
+
+  const data = {
+    user: params.get('et')
+      || params.get('email_track')
+      || params.get('eid')
+      || params.get('u')
+      || null,
+    campaign: params.get('campaign')
+      || params.get('c') || '-',
+    subject: params.get('subject')
+      || params.get('sub')
+      || params.get('s') || '-',
+    messageId: params.get('mid')
+      || params.get('message_id')
+      || params.get('id') || '-',
+    template: params.get('template')
+      || params.get('tpl') || '-',
+    group: params.get('group')
+      || params.get('g') || '-'
+  };
+
+  // ── لا يوزر = لا تتبع ──
+  if (!data.user) {
+    console.warn('📧 No user specified');
+    return;
+  }
+
+  // ── تنظيف HTML ──
+  function esc(t) {
+    if (!t) return '';
+    return String(t)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  // ── علم الدولة ──
+  function flag(code) {
+    if (!code || code.length !== 2) return '🏳️';
+    try {
+      return String.fromCodePoint(
+        ...code.toUpperCase().split('')
+          .map(c => 127397 + c.charCodeAt(0)));
+    } catch(e) { return '🏳️'; }
+  }
+
+  // ── منع التكرار السريع ──
+  function shouldTrack() {
+    try {
+      const key = '_ep_' + data.user + '_' + data.messageId;
+      const last = localStorage.getItem(key);
+      if (last) {
+        const elapsed = Date.now() - parseInt(last, 10);
+        if (elapsed < 3 * 60 * 1000) return false;
+      }
+      localStorage.setItem(key, Date.now().toString());
+      return true;
+    } catch(e) { return true; }
+  }
+
+  // ── عدد الفتحات ──
+  function getOpenCount() {
+    try {
+      const key = '_eoc_' + data.user;
+      let c = parseInt(
+        localStorage.getItem(key) || '0', 10);
+      if (isNaN(c)) c = 0;
+      c++;
+      localStorage.setItem(key, c.toString());
+      return c;
+    } catch(e) { return 1; }
+  }
+
+  // ── أول فتح ──
+  function getFirstOpen() {
+    try {
+      const key = '_efo_' + data.user;
+      if (!localStorage.getItem(key))
+        localStorage.setItem(key, Date.now().toString());
+      const ts = parseInt(localStorage.getItem(key), 10);
+      if (!isNaN(ts)) {
+        return new Date(ts).toLocaleString('ar-SA', {
+          dateStyle: 'long', timeStyle: 'medium'
+        });
+      }
+      return '-';
+    } catch(e) { return '-'; }
+  }
+
+  // ── الوقت منذ أول فتح ──
+  function timeSinceFirst() {
+    try {
+      const key = '_efo_' + data.user;
+      const ts = parseInt(localStorage.getItem(key), 10);
+      if (isNaN(ts)) return '';
+      const diff = Math.round((Date.now() - ts) / 1000);
+      if (diff < 60) return `${diff} ثانية`;
+      if (diff < 3600)
+        return `${Math.floor(diff/60)} دقيقة`;
+      if (diff < 86400)
+        return `${Math.floor(diff/3600)} ساعة`;
+      return `${Math.floor(diff/86400)} يوم`;
+    } catch(e) { return ''; }
+  }
+
+  // ── معلومات الجهاز ──
+  function getDevice() {
+    const ua = navigator.userAgent || '';
+    let type = '💻 Desktop';
+    if (/iPad|Android(?!.*Mobile)|Tablet/i.test(ua))
+      type = '📟 Tablet';
+    else if (/Mobile|iPhone|iPod/i.test(ua))
+      type = '📱 Mobile';
+
+    let os = 'Unknown';
+    if (/Windows/i.test(ua)) os = 'Windows';
+    else if (/Mac OS/i.test(ua)) os = 'macOS';
+    else if (/iPhone|iPad/i.test(ua)) os = 'iOS';
+    else if (/Android/i.test(ua)) os = 'Android';
+    else if (/Linux/i.test(ua)) os = 'Linux';
+
+    let browser = 'Unknown';
+    if (/Edg\//i.test(ua)) browser = 'Edge';
+    else if (/OPR\//i.test(ua)) browser = 'Opera';
+    else if (/Firefox\//i.test(ua)) browser = 'Firefox';
+    else if (/Chrome\//i.test(ua)) browser = 'Chrome';
+    else if (/Safari\//i.test(ua)) browser = 'Safari';
+
+    let emailClient = '';
+    if (/Thunderbird/i.test(ua)) emailClient = 'Thunderbird';
+    else if (/Outlook/i.test(ua)) emailClient = 'Outlook';
+    else if (/GoogleImageProxy/i.test(ua))
+      emailClient = 'Gmail (Proxy)';
+
+    return { type, os, browser, emailClient };
+  }
+
+  // ── التاريخ والوقت ──
+  function getDateTime() {
+    const now = new Date();
+    const days = ['الأحد', 'الاثنين', 'الثلاثاء',
+      'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+    const months = ['يناير', 'فبراير', 'مارس', 'أبريل',
+      'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر',
+      'أكتوبر', 'نوفمبر', 'ديسمبر'];
+    let h = now.getHours();
+    const ampm = h >= 12 ? 'مساءً' : 'صباحاً';
+    h = h % 12 || 12;
+    return {
+      date: `${days[now.getDay()]}، ${now.getDate()} ` +
+        `${months[now.getMonth()]} ${now.getFullYear()}`,
+      time: `${String(h).padStart(2,'0')}:` +
+        `${String(now.getMinutes()).padStart(2,'0')}:` +
+        `${String(now.getSeconds()).padStart(2,'0')} ${ampm}`
+    };
+  }
+
+  // ── جلب IP ──
+  async function getIP() {
+    const apis = [
+      'https://ipapi.co/json/',
+      'https://ipwho.is/',
+      'https://freeipapi.com/api/json'
+    ];
+    for (const api of apis) {
+      try {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), 5000);
+        const r = await fetch(api, { signal: ctrl.signal });
+        clearTimeout(timer);
+        if (!r.ok) continue;
+        const d = await r.json();
+        if (d.country_name) return {
+          ip: d.ip || '-', country: d.country_name,
+          code: d.country_code || '',
+          city: d.city || '-', region: d.region || '-',
+          isp: d.org || '-',
+          lat: d.latitude, lon: d.longitude
+        };
+        if (d.country) return {
+          ip: d.ip || '-', country: d.country,
+          code: d.country_code || '',
+          city: d.city || '-', region: d.region || '-',
+          isp: (d.connection && d.connection.isp) || '-',
+          lat: d.latitude, lon: d.longitude
+        };
+      } catch(e) { continue; }
+    }
+    return {
+      ip: '-', country: 'غير معروف', code: '',
+      city: '-', region: '-', isp: '-',
+      lat: null, lon: null
+    };
+  }
+
+  // ═══════════════════════════════════
+  // 🚀 التشغيل
+  // ═══════════════════════════════════
+  async function track() {
+    if (!shouldTrack()) {
+      console.log('📧 Already tracked:', data.user);
+      // سجّل الفتح الإضافي بصمت
+      getOpenCount();
+      return;
+    }
+
+    const openCount = getOpenCount();
+    const firstOpen = getFirstOpen();
+    const sinceFirst = timeSinceFirst();
+    const device = getDevice();
+    const dt = getDateTime();
+
+    let ip;
+    try { ip = await getIP(); }
+    catch(e) {
+      ip = { ip: '-', country: 'غير معروف', code: '',
+        city: '-', region: '-', isp: '-',
+        lat: null, lon: null };
+    }
+
+    const f = flag(ip.code);
+    let location = 'غير معروف';
+    if (ip.country !== 'غير معروف') {
+      location = (ip.city !== '-')
+        ? `${ip.country}، ${ip.city}` : ip.country;
+    }
+
+    const isFirst = openCount === 1;
+    const openEmoji = isFirst ? '📬' : '📭';
+    const headerEmoji = isFirst ? '🔔' : '🔁';
+    const headerText = isFirst
+      ? 'EMAIL OPENED - FIRST TIME'
+      : `EMAIL RE-OPENED (#${openCount})`;
+    const openStatus = isFirst
+      ? '🆕 أول فتح!'
+      : `🔄 فتح متكرر (المرة #${openCount})`;
+
+    // شريط التفاعل
+    let engLevel;
+    if (openCount >= 5) engLevel = '🔥🔥🔥 تفاعل ممتاز!';
+    else if (openCount >= 3) engLevel = '🔥🔥 تفاعل عالي';
+    else if (openCount >= 2) engLevel = '⚡ مهتم';
+    else engLevel = '📌 فتح أولي';
+
+    let openBars = '';
+    const maxBars = Math.min(openCount, 10);
+    for (let i = 0; i < maxBars; i++) openBars += '🟢';
+    for (let i = maxBars; i < 10; i++) openBars += '⚪';
+
+    const dark = window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // ═══════════════════════════════════
+    // 📨 بناء الرسالة
+    // ═══════════════════════════════════
+    let msg = `\
+${headerEmoji}  <b>${headerText}</b>  ${headerEmoji}
+◆━━━━━━━━━━━━━━━━━━━━━◆
+
+    ${openEmoji}  تم فتح الإيميل!
+    🌐  <b>${esc(SITE)}</b>
+
+✨━━━━━━━━━━━━━━━━━━━✨
+
+┌─── 👤 <b>المستلم (ID User)</b> ───┐
+│ 🏷 اليوزر: <b>${esc(data.user)}</b>
+│ 📊 الحالة: ${openStatus}
+│ 🔢 إجمالي الفتحات: <b>${openCount}</b> مرة
+│ 📅 أول فتح: ${esc(firstOpen)}`;
+
+    if (sinceFirst && !isFirst)
+      msg += `\n│ ⏳ منذ أول فتح: ${sinceFirst}`;
+    if (data.group !== '-')
+      msg += `\n│ 👥 المجموعة: ${esc(data.group)}`;
+    msg += `\n└${'─'.repeat(27)}┘`;
+
+    msg += `
+
+┌─── 🕐 <b>وقت الفتح</b> ───┐
+│ 📅 التاريخ: ${dt.date}
+│ ⏰ الوقت: ${dt.time}
+└${'─'.repeat(27)}┘
+
+┌─── 📋 <b>تفاصيل الرسالة</b> ───┐
+│ 📧 الحملة: <b>${esc(data.campaign)}</b>
+│ 📝 الموضوع: ${esc(data.subject)}
+│ 🔖 Message ID: <code>${esc(data.messageId)}</code>`;
+
+    if (data.template !== '-')
+      msg += `\n│ 📄 القالب: ${esc(data.template)}`;
+    msg += `\n└${'─'.repeat(27)}┘`;
+
+    msg += `
+
+┌─── 🌍 <b>الموقع الجغرافي</b> ───┐
+│ ${f} الدولة/المدينة: ${esc(location)}`;
+    if (ip.region && ip.region !== '-')
+      msg += `\n│ 📍 المنطقة: ${esc(ip.region)}`;
+    if (ip.isp && ip.isp !== '-')
+      msg += `\n│ 📡 مزود الخدمة: ${esc(ip.isp)}`;
+    msg += `\n│ 🔢 IP: <code>${esc(ip.ip)}</code>`;
+    if (ip.lat && ip.lon) {
+      msg += `\n│ 📌 <code>${ip.lat}, ${ip.lon}</code>`;
+      msg += `\n│ 🗺 <a href="https://maps.google.com/?q=${ip.lat},${ip.lon}">خرائط Google</a>`;
+    }
+    msg += `\n└${'─'.repeat(27)}┘`;
+
+    msg += `
+
+┌─── ${device.type.split(' ')[0]} <b>جهاز القارئ</b> ───┐
+│ 📟 الجهاز: ${device.type}
+│ 💿 النظام: ${device.os}
+│ 🌐 المتصفح: ${device.browser}
+│ 📐 الشاشة: ${screen.width}×${screen.height}
+│ 🗣 اللغة: ${navigator.language || '-'}`;
+    if (device.emailClient)
+      msg += `\n│ 📧 عميل البريد: ${device.emailClient}`;
+    msg += `\n│ ${dark ? '🌙 الوضع الداكن' : '☀️ الوضع الفاتح'}`;
+    msg += `\n│ ${navigator.onLine ? '🟢 متصل' : '🔴 غير متصل'}`;
+    msg += `\n└${'─'.repeat(27)}┘`;
+
+    msg += `
+
+┌─── 📊 <b>مؤشر التفاعل</b> ───┐
+│ 📈 المستوى: ${engLevel}
+│ 📊 الفتحات: ${openBars} ${openCount}
+└${'─'.repeat(27)}┘
+
+✦ ─────────────────── ✦
+📧 <b>Email Tracker</b>
+👤 ID User: <code>${esc(data.user)}</code>
+📋 Campaign: <code>${esc(data.campaign)}</code>
+◆━━━━━━━━━━━━━━━━━━━━━◆`;
+
+    // ✅ إرسال لبوت الإيميل فقط
+    try {
+      await fetch(
+        `https://api.telegram.org/bot${BOT.TOKEN}/sendMessage`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: BOT.CHAT_ID,
+            text: msg,
+            parse_mode: 'HTML',
+            disable_web_page_preview: true
+          })
+        });
+    } catch(e) {
+      console.error('📧 Send error:', e.message);
+    }
+
+    console.log('📧 Tracked:', data.user,
+      '| Opens:', openCount);
+  }
+
+  track();
+})();
+</script>
+</head>
+<body></body>
+</html>
